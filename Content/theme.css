@@ -1,0 +1,80 @@
+﻿/**********************
+* Green Theme: E.V.A. *
+***********************/
+
+/*Logo*/
+.skin-blue .main-header .logo {
+    background-color: #2799fa;
+    color: #fff;
+    border-bottom: 0 solid transparent;
+}
+/*Logo Hover*/
+.skin-blue .main-header .logo:hover {
+    background-color: #2799fa;
+    color: #fff;
+    border-bottom: 0 solid transparent;
+}
+/*Menu Background Left*/
+.skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side {
+    background-color: #2799fa;
+}
+/*Links Left Menu*/
+.skin-blue .sidebar a {
+    color: #fff;
+}
+/*Links Left Menu Background Left Hover*/
+.skin-blue .sidebar-menu > li:hover > a, .skin-blue .sidebar-menu > li.active > a {
+    border-left-color: #2799fa;
+    background: brown;
+    color:#fff;
+}
+/*Icons Navbar*/
+.content-tabs button i {
+    color: #999;
+}
+/*LinkLogout*/
+.linkLogout {
+    min-width: 230px;
+    color: #fff;
+    background-color: #2799fa;
+}
+/*Content Page Tab*/
+.content-tabs .page-tabs a {
+    background-color: #ececec;
+    color: lightslategray;
+    margin-right: 3px !important;
+    height: 38px;
+    display: block;
+    float: left;
+    border-right: solid 0px #ddd;
+    padding: 0 15px;
+    padding-right: 8px;
+    text-decoration: none;
+}
+/*Content Page Tab Active*/
+.content-tabs .page-tabs a.active {
+    background-color: #2799fa;
+    border-right: none;
+    color: #fff;
+    height: 38px;
+    border-right: solid 1px #e7ebee;
+}
+/*Title Page Tab*/
+.page_tab_title {
+    margin-right: 3px !important;
+    font-size: 15px !important;
+}
+/*Hover Icon SVG*/
+.page-tabs-content a svg:hover {
+    color: red;
+}
+
+.tag {
+    color: black !important;
+    border-color: #2799fa !important;
+}
+
+.tag:after {
+    color: red !important;
+}
+

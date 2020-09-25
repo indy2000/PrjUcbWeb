@@ -1,0 +1,15 @@
+﻿.swal-baixa {
+    min-width: 450px !important;
+    /*min-width: 228px;*/
+}
+
+/*
+    Dialog sem cabeçalho
+*/
+/*.dialog-remove-header .ui-dialog-titlebar, .ui-dialog-title {
+    max-height: 3px;
+}*/
+
+.dialog-remove-header .ui-dialog-titlebar-close {
+    z-index: 999999;
+}
