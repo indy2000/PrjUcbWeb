@@ -34,7 +34,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!-- Favicons -->
-    <link href="~/images/favicon/favicon.png" rel="shortcut icon">
+    <link href="~/images/favicon/ucb-logo.png" rel="shortcut icon">
     <link href="~/images/favicon/apple-touch-icon-57-precomposed.png" rel="apple-touch-icon">
     <link href="~/images/favicon/apple-touch-icon-72-precomposed.png" rel="apple-touch-icon" sizes="72x72">
     <link href="~/images/favicon/apple-touch-icon-144-precomposed.png" rel="apple-touch-icon" sizes="114x114">
@@ -52,7 +52,7 @@
         <header class="main-header">
             <a href="#" class="logo" data-toggle="offcanvas" role="button">
                 <span class="logo-mini"> <img src="~/Images/logo_eva_white.png" style="width:80%;"></span>
-                <span class="logo-lg" style="font-family: 'Poiret One', 'cursive'"><img src="~/Images/logo_eva_white.png" style="height:40px;">EVA</span>
+                <span class="logo-lg" style="font-family: 'Poiret One', 'cursive'"><img src="~/Images/logo_eva_white.png" style="height:40px;">Universidade <br/>Castelo <br/>Branco</span>
             </a>
 
             <nav class="navbar navbar-static-top">
@@ -303,16 +303,16 @@
 
         $(function () {
 
-            App.setbasePath("localhost/");
+            App.setbasePath("/PrjUcbWeb/");
             App.setGlobalImgPath("Images/");
 
-            addTabs({
+            @*addTabs({
                 id: '10008',
                 title: 'Início',
                 close: false,
-                url: '@Url.Action("Index", "Dashboard")',
+                url: '@Url.Action("Index", "Home")',
                 urlType: "absolute"
-            });
+            });*@
 
             App.fixIframeCotent();
 
@@ -321,7 +321,7 @@
                     id: 1,
                     text: " Inicio",
                     icon: "la la-home la-1-4x",
-                    url: "localhost/Dashboard/Index",
+                    url: '@Url.Action("Index", "Home")',
                     urlType: "absolute",
                     targetType: "iframe-tab",
                     cod_area: null
@@ -330,7 +330,7 @@
                   id: 2,
                     text: " Usuário",
                     icon: "la la-user la-1-4x",
-                    url: "localhost/Dashboard/Index",
+                    url: '@Url.Action("Index", "Usuario")',
                     urlType: "absolute",
                     targetType: "iframe-tab",
                     cod_area: null  }]

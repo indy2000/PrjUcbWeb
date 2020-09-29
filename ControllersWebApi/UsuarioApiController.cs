@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace PrjUcbWeb.ControllersWebApi
 {
-    public class UsuarioController : ApiController
+    public class UsuarioApiController : BaseApiController
     {
         // GET api/<controller>
         public IEnumerable<string> Get()
@@ -43,10 +43,10 @@ namespace PrjUcbWeb.ControllersWebApi
 
         private MySqlDatabase MySqlDatabase { get; set; }
 
-        public UsuarioController(MySqlDatabase mySqlDatabase)
-        {
-            this.MySqlDatabase = mySqlDatabase;
-        }
+        //public UsuarioController(MySqlDatabase mySqlDatabase)
+        //{
+        //    this.MySqlDatabase = mySqlDatabase;
+        //}
 
         [HttpGet]
         [Route("api/getUsuario")]
@@ -54,6 +54,7 @@ namespace PrjUcbWeb.ControllersWebApi
         {
             var senha = Criptografia.doEncryptAES("m4tr1x");
             List<Usuario> retorno = new List<Usuario>();
+            MySqlDatabase = new MySqlDatabase();
             var sql = this.MySqlDatabase.Connection.CreateCommand() as MySqlCommand;
             sql.CommandText = @"SELECT * FROM CADASTRO";
 
@@ -63,7 +64,7 @@ namespace PrjUcbWeb.ControllersWebApi
                 {
                     retorno.Add(new Usuario
                     {
-                        id = 0,
+                        id = Convert.ToInt64(reader["ID"]),
                         nome = reader["NOME"].ToString(),
                         email = reader["EMAIL"].ToString(),
                         senha = reader["SENHA"].ToString(),

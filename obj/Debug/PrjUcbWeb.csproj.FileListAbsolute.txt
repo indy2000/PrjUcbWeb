@@ -226,3 +226,5 @@ C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Numerics.Vectors.xml
 C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\yagoc\source\repos\PrjUcbWeb\obj\Debug\PrjUcbWeb.Resources.RsBase.resources
 C:\Users\yagoc\source\repos\PrjUcbWeb\obj\Debug\PrjUcbWeb.csproj.GenerateResource.cache
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Microsoft.Owin.Host.SystemWeb.xml

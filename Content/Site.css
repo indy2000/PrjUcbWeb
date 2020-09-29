@@ -16,6 +16,21 @@
     white-space: normal;
 }
 
+.ucb-logo {
+    font-size: 2.54cm;
+    font-family: "Mongolian Baiti";
+    color: rgb( 5, 17, 63 );
+    text-align: center;
+    -moz-transform: matrix( 4.05698005698006, 0, 0, 4.29341761721185, 0, 0);
+    -webkit-transform: matrix( 4.05698005698006, 0, 0, 4.29341761721185, 0, 0);
+    position: absolute;
+    left: -0.52916677881173cm;
+    top: 3.986389733715cm;
+    width: 20.92cm;
+    height: 7.902cm;
+    z-index: 1;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,

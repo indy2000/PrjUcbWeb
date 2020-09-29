@@ -1,0 +1,81 @@
+﻿@{
+	ViewBag.Title = "PrjUcb - Login";
+	Layout = "~/Views/Shared/_LayoutLimpo.cshtml";
+}
+
+
+@section scripts
+{
+	<script>
+		$(document).ready(function () {
+
+		});
+
+		$("#iBtnLogar").on("click", function () {
+			var user = $("#iUser").val();
+			var senha = $("#iPass").val();
+
+            $.ajax({
+                url: 'http://localhost/PrjUcbWeb/api/login?usuario=' + user + '&senha=' + senha,
+				type: 'GET',
+				dataType: 'json',
+
+				error: function (request, status, error) {
+
+				}
+			}).done(function (data) {
+				if (data.ok) {
+					if (data.objeto != null) {
+						alert(`Seja bem-vindo, ` + data.objeto.nome + '!');
+                        //window.location = 'pag2.html';
+                        window.location = "@Url.Action("Index", "Home")";
+					}
+					else {
+						alert(data.mensagem);
+					}
+				}
+			});
+
+			/*if(!user.match("yago") || !senha.match("123"))
+			{
+				alert("Usuário ou senha inválidos!");
+			}
+			else{
+				//https://localhost:5001/api/login?usuario=100429&senha=m4tr1x
+				window.location = 'pag2.html';
+			}*/
+		});
+
+		$("#iBtnLimpar").on("click", function () {
+			$("#iUser").val("");
+			$("#iPass").val("");
+		});
+	</script>
+}
+
+<div>
+	<div class="text-center mt-4">
+		<h2>Formulário Login</h2>
+	</div>
+</div>
+
+<form>
+	<div class="form-row mt-5">
+		<div class="mt-5 mx-auto col-md-0">
+			<label for="iUser">Usuário:</label>
+			<input type="text" class="form-control" id="iUser">
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="mt-3 mx-auto col-md-0">
+			<label for="iPass">Senha:</label>
+			<input type="password" class="form-control" id="iPass">
+		</div>
+	</div>
+
+	<div id="iDiv" class="text-center">
+		<button id="iBtnLimpar" type="button" class="btn btn-success mt-3 mx-1">Limpar</button>
+		<button id="iBtnLogar" type="button" class="btn btn-success mt-3 mx-1">Login</button>
+
+	</div>
+</form>

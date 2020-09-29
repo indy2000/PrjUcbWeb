@@ -14,7 +14,7 @@ using System.Web.Http;
 namespace PrjUcbWeb.ControllersWebApi
 {
     
-    public class LoginController : ApiController
+    public class LoginApiController : BaseApiController
     {
         // GET api/<controller>
         public IEnumerable<string> Get()
@@ -45,10 +45,10 @@ namespace PrjUcbWeb.ControllersWebApi
 
         private MySqlDatabase MySqlDatabase { get; set; }
 
-        public LoginController(MySqlDatabase mySqlDatabase)
+        /*public LoginApiController(MySqlDatabase mySqlDatabase)
         {
             this.MySqlDatabase = mySqlDatabase;
-        }
+        }*/
 
         [HttpGet]
         [Route("api/login")]
@@ -57,6 +57,7 @@ namespace PrjUcbWeb.ControllersWebApi
             ApiRetorno<Usuario> retorno = new ApiRetorno<Usuario>();
             Usuario objeto = new Usuario();
 
+            MySqlDatabase = new MySqlDatabase();
             var sql = this.MySqlDatabase.Connection.CreateCommand() as MySqlCommand;
             StringBuilder sqlQuery = new StringBuilder();
 
@@ -85,6 +86,7 @@ namespace PrjUcbWeb.ControllersWebApi
                 if (validaLogin(objeto.senha, senha))
                 {
                     retorno.objeto = objeto;
+                    retorno.mensagem = "Sucesso!";
 
                 }
                 else
