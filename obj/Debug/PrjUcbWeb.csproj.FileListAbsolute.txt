@@ -228,3 +228,6 @@ C:\Users\yagoc\source\repos\PrjUcbWeb\obj\Debug\PrjUcbWeb.Resources.RsBase.resou
 C:\Users\yagoc\source\repos\PrjUcbWeb\obj\Debug\PrjUcbWeb.csproj.GenerateResource.cache
 C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Microsoft.Owin.Host.SystemWeb.dll
 C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.Cors.dll
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.Http.Cors.dll
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.Http.Cors.xml

@@ -226,3 +226,8 @@ C:\Users\yagoc\source\repos\PrjUcbWeb\obj\Release\PrjUcbWeb.csproj.GenerateResou
 C:\Users\yagoc\source\repos\PrjUcbWeb\obj\Release\PrjUcbWeb.csproj.CopyComplete
 C:\Users\yagoc\source\repos\PrjUcbWeb\obj\Release\PrjUcbWeb.dll
 C:\Users\yagoc\source\repos\PrjUcbWeb\obj\Release\PrjUcbWeb.pdb
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.Cors.dll
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.Http.Cors.dll
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.Http.Cors.xml
