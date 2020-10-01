@@ -86,7 +86,6 @@ C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.WebPages.xml
 C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.WebPages.Deployment.xml
 C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.WebPages.Razor.xml
 C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Newtonsoft.Json.xml
-C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Antlr3.Runtime.pdb
 C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Net.Http.Formatting.xml
 C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.Http.xml
 C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.Http.WebHost.xml
@@ -231,3 +230,15 @@ C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.Cors.dll
 C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.Http.Cors.dll
 C:\Users\yagoc\source\repos\PrjUcbWeb\bin\System.Web.Http.Cors.xml
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\hibernate.cfg.xml
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\FluentNHibernate.dll
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Iesi.Collections.dll
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\NHibernate.dll
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Remotion.Linq.dll
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Remotion.Linq.EagerFetching.dll
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Antlr3.Runtime.xml
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\FluentNHibernate.xml
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Iesi.Collections.xml
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\NHibernate.xml
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Remotion.Linq.xml
+C:\Users\yagoc\source\repos\PrjUcbWeb\bin\Remotion.Linq.EagerFetching.xml

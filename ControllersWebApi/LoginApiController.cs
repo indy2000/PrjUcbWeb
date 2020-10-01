@@ -1,5 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
+using NHibernate;
 using PrjUcbWeb.Connection;
+using PrjUcbWeb.Entities;
 using PrjUcbWeb.Models;
 using PrjUcbWeb.Utils;
 using System;
@@ -52,10 +54,10 @@ namespace PrjUcbWeb.ControllersWebApi
 
         [HttpGet]
         [Route("api/login")]
-        public async Task<ApiRetorno<Usuario>> getLogin(String usuario, String senha)
+        public async Task<ApiRetorno<UsuarioModels>> getLogin(String usuario, String senha)
         {
-            ApiRetorno<Usuario> retorno = new ApiRetorno<Usuario>();
-            Usuario objeto = new Usuario();
+            ApiRetorno<UsuarioModels> retorno = new ApiRetorno<UsuarioModels>();
+            UsuarioModels objeto = new UsuarioModels();
 
             MySqlDatabase = new MySqlDatabase();
             var sql = this.MySqlDatabase.Connection.CreateCommand() as MySqlCommand;
@@ -72,7 +74,7 @@ namespace PrjUcbWeb.ControllersWebApi
                 {
                     while (await reader.ReadAsync())
                     {
-                        objeto = new Usuario
+                        objeto = new UsuarioModels
                         {
                             id = Convert.ToInt64(reader["ID"]),
                             nome = reader["NOME"].ToString(),
@@ -93,6 +95,51 @@ namespace PrjUcbWeb.ControllersWebApi
                 {
                     retorno.mensagem = "Usuário ou Senha inválido.";
                 }
+                retorno.ok = true;
+            }
+            catch (Exception e)
+            {
+                retorno.ok = false;
+                retorno.exception = !String.IsNullOrEmpty(e.Message) ? e.Message : e.InnerException.Message;
+            }
+            return retorno;
+        }
+
+        [HttpGet]
+        [Route("api/logar")]
+        public async Task<ApiRetorno<Usuario>> getLoginHibernate(String login, String senha)
+        {
+            ApiRetorno<Usuario> retorno = new ApiRetorno<Usuario>();
+            Usuario objeto = new Usuario();        
+
+            try
+            {
+                using (ISession session = MySQLSessionFactory.StartSession())
+                using (var repoUsuario = new Repository<Usuario>())
+                {
+                    objeto = await repoUsuario.selectFirst(p => p.usuario == login);
+
+
+                    if(objeto != null)
+                    {
+                        if (validaLogin(objeto.senha, senha))
+                        {
+                            retorno.objeto = objeto;
+                            retorno.mensagem = "Sucesso!";
+
+                        }
+                        else
+                        {
+                            retorno.mensagem = "Usuário ou Senha inválido.";
+                        }
+                    }
+                    else
+                    {
+                        retorno.mensagem = "Usuário não encontrado.";
+                    }
+                    
+                }
+                    
                 retorno.ok = true;
             }
             catch (Exception e)

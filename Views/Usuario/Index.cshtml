@@ -1,6 +1,60 @@
-﻿@{
-    ViewBag.Title = "Listagem de Usuários";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@using PrjUcbWeb.Enums
+@using PrjUcbWeb.Resources
+
+@{
+    ViewBag.Title = RsBase.LISTAGEM_USUARIO;
+    Layout = "~/Views/Shared/_LayoutLimpo.cshtml";
+}
+
+@section styles
+{
+	@Styles.RenderFormat(CONSTANTES.StyleVersion, "~/Content/cssDataTable")
+}
+
+@section scripts
+	{
+	@Scripts.RenderFormat(CONSTANTES.ScriptVersion, "~/bundles/jsDataTable")
+
+	<script>
+	$(document).ready(function()
+	{
+		$("#iDataTable").DataTable({
+            "ajax": {
+                'url': 'api/getUsuario',
+				'type': 'GET',
+				 "dataSrc": ""
+			}, //"ajax" : "data",
+			"columns" : [
+				{ "data": "nome" },
+				{ "data": "usuario" },
+				{ "data": "email" },
+				{ "data": "tipo_usuario"},
+			],
+			columnDefs : [
+				{ targets : [3],
+				  render : function (data, type, row) {
+                      return data == '1' ? '@Html.Raw(Tipo_Usuario.Administrador)' : '@Html.Raw(Tipo_Usuario.Professor)';
+				  }
+				}
+			]
+		});
+
+    });
+	</script>
 }
 
 
+<div id="iDataTableLayout" class="mt-4 pl-4 pr-4">
+	<table id="iDataTable" class="display" style="width:100%">
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Usuário</th>
+				<th>E-mail</th>
+				<th>Tipo Usuário</th>
+			</tr>
+		</thead>
+		<tfoot>
+		</tfoot>
+	</table>
+</div>

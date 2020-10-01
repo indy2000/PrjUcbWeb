@@ -118,6 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ADMINISTRADOR" xml:space="preserve">
-    <value>administrador</value>
+    <value>Administrador</value>
+  </data>
+  <data name="INICIO" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="LISTAGEM_USUARIO" xml:space="preserve">
+    <value>Listagem de Usuários</value>
+  </data>
+  <data name="LOGIN" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="PRJUCBWEB" xml:space="preserve">
+    <value>PrjUcbWeb</value>
+  </data>
+  <data name="PROFESSOR" xml:space="preserve">
+    <value>Professor</value>
   </data>
 </root>

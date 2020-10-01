@@ -50,10 +50,10 @@ namespace PrjUcbWeb.ControllersWebApi
 
         [HttpGet]
         [Route("api/getUsuario")]
-        public async Task<List<Usuario>> getUsuario()
+        public async Task<List<UsuarioModels>> getUsuario()
         {
             var senha = Criptografia.doEncryptAES("m4tr1x");
-            List<Usuario> retorno = new List<Usuario>();
+            List<UsuarioModels> retorno = new List<UsuarioModels>();
             MySqlDatabase = new MySqlDatabase();
             var sql = this.MySqlDatabase.Connection.CreateCommand() as MySqlCommand;
             sql.CommandText = @"SELECT * FROM CADASTRO";
@@ -62,11 +62,12 @@ namespace PrjUcbWeb.ControllersWebApi
             {
                 while (await reader.ReadAsync())
                 {
-                    retorno.Add(new Usuario
+                    retorno.Add(new UsuarioModels
                     {
                         id = Convert.ToInt64(reader["ID"]),
                         nome = reader["NOME"].ToString(),
                         email = reader["EMAIL"].ToString(),
+                        usuario = reader["USUARIO"].ToString(),
                         senha = reader["SENHA"].ToString(),
                         tipo_usuario = reader["TIPO_USUARIO"].ToString().Contains("administrador") ? 1 : 2
                     });

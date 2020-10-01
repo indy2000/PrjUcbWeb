@@ -1,7 +1,8 @@
 ﻿<!DOCTYPE html>
-@using Microsoft.AspNet.Identity
+
 @using System.Configuration
 @using Microsoft.AspNet.Identity
+@using PrjUcbWeb.Resources
 
 <html style="overflow:hidden">
 <head>
@@ -15,9 +16,9 @@
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" />
 
-    <title>@("PrjUcb - v"+ ConfigurationManager.AppSettings["BuildVersion"])</title>
+    <title>@(RsBase.PRJUCBWEB + " - v" + ConfigurationManager.AppSettings["BuildVersion"])</title>
 
-    @Styles.RenderFormat("<link href=\"{0}?v="+"v1.0"+"\" rel=\"stylesheet\"/>", "~/Content/csslayout")
+    @Styles.RenderFormat(CONSTANTES.StyleVersion, "~/Content/csslayout")
 
     @*<style type="text/css">
             html {
@@ -34,7 +35,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!-- Favicons -->
-    <link href="~/images/favicon/ucb-logo.png" rel="shortcut icon">
+    <link href="~/images/favicon/ucb-logo-2.png" rel="shortcut icon">
     <link href="~/images/favicon/apple-touch-icon-57-precomposed.png" rel="apple-touch-icon">
     <link href="~/images/favicon/apple-touch-icon-72-precomposed.png" rel="apple-touch-icon" sizes="72x72">
     <link href="~/images/favicon/apple-touch-icon-144-precomposed.png" rel="apple-touch-icon" sizes="114x114">
@@ -91,7 +92,7 @@
                     <!--User-->
                     <div class="roll-nav roll-right" style="right: 0px;">
                         <button class="dropdown tabClose" data-placement="bottom" title="Usuário" data-toggle="dropdown">
-                            <i class="la la-user la-2x"></i>
+                            <i class="la la-power-off la-2x"></i>
 
                             <span class="hidden">
                                 @if (Request.IsAuthenticated)
@@ -103,11 +104,9 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right linkLogout">
 
-                            <div class="text-center">
-                                <i class="la la-user la-2x"></i>
-                            </div>
 
-                            <li class="text-center" style="margin-top: -20px;">
+
+                            <li class="text-center" style="margin-top: 20px;">
 
                                 <span style="font-size:14px">
                                     @if (Request.IsAuthenticated)
@@ -117,7 +116,7 @@
                                 </span>
 
                                 <div class="text-center tabCloseCurrent" style="margin-top: -10px;">
-                                    <a id="btn_login_out" href="@Url.Action("LogOff", "Account")" class="btn">LOGOFF</a>
+                                    <a id="btn_login_out" href="@Url.Action("LogOff", "Account")" class="btn">Sair</a>
                                 </div>
                             </li>
 
@@ -306,13 +305,13 @@
             App.setbasePath("/PrjUcbWeb/");
             App.setGlobalImgPath("Images/");
 
-            @*addTabs({
+            addTabs({
                 id: '10008',
                 title: 'Início',
                 close: false,
                 url: '@Url.Action("Index", "Home")',
                 urlType: "absolute"
-            });*@
+            });
 
             App.fixIframeCotent();
 
@@ -327,12 +326,21 @@
                     cod_area: null
                 },
                 {
-                  id: 2,
+                  id: null,
                     text: " Usuário",
                     icon: "la la-user la-1-4x",
                     url: '@Url.Action("Index", "Usuario")',
                     urlType: "absolute",
                     targetType: "iframe-tab",
+                    cod_area: null
+                },
+                {
+                  id: null,
+                    text: " Sair",
+                    icon: "la la-power-off la-1-4x",
+                    url: '@Url.Action("LogOff", "Account")',
+                    urlType: "absolute",
+                    targetType: null,
                     cod_area: null  }]
             });
 

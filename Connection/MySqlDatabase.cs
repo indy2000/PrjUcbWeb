@@ -10,6 +10,7 @@ namespace PrjUcbWeb.Connection
     public class MySqlDatabase : IDisposable
     {
         String stringConn = ConfigurationManager.AppSettings["Bd.ConnectionString"];
+
             
         public MySqlConnection Connection;
 

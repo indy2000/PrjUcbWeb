@@ -1,8 +1,7 @@
 ﻿<!DOCTYPE html>
-
 @using System.Configuration
+@using Microsoft.AspNet.Identity
 @using PrjUcbWeb.Utils
-
 
 @*<html lang="@CultureHelper.GetCurrentNeutralCulture()" dir="@(CultureHelper.IsRighToLeft() ? "rtl" : "ltr")" style="overflow:hidden">*@
 <html lang="@CultureHelper.GetCurrentNeutralCulture()" dir="@(CultureHelper.IsRighToLeft() ? "rtl" : "ltr")">
@@ -19,7 +18,7 @@
 
     <title>@ViewBag.Title</title>
 
-    @Styles.RenderFormat("<link href=\"{0}?v=" + "v1.0" + "\" rel=\"stylesheet\"/>", "~/Content/csslayoutlimpo")
+    @Styles.RenderFormat(CONSTANTES.StyleVersion, "~/Content/csslayoutlimpo")
 
     <!--[if lt IE 9]>
         <script src="../assets/js/ie8-responsive-file-warning.js"></script>
@@ -31,7 +30,7 @@
     <![endif]-->
     <!-- Favicons -->
     <link rel="shortcut icon" href="~/images/favicon/favicon.png" type="image/x-icon" />
-    <link href="~/images/favicon/favicon.png" rel="shortcut icon">
+    <link href="~/images/favicon/ucb-logo.png" rel="shortcut icon">
     <link href="~/images/favicon/apple-touch-icon-57-precomposed.png" rel="apple-touch-icon">
     <link href="~/images/favicon/apple-touch-icon-72-precomposed.png" rel="apple-touch-icon" sizes="72x72">
     <link href="~/images/favicon/apple-touch-icon-144-precomposed.png" rel="apple-touch-icon" sizes="114x114">
@@ -41,37 +40,18 @@
     @RenderSection("variaveis", required: false)
 
     <script>
-        var baseUrl = 'localhost';
+        var baseUrl = '@CONSTANTES.URLApi/';
         var username = '@HttpContext.Current.User.Identity.Name.ToString()';
-
-        var appName = 'PrjUcbWeb';
+        
     </script>
 
     <script src="~/Content/DataTables/datatable.variaveis.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 
-    <!-- /.content-wrapper -->
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-    immediately after the control sidebar -->
-    <!-- ./wrapper -->
-    <!-- jQuery 2.2.3 -->
-    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
-    <!-- Bootstrap 3.3.6 -->
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/Scripts/app.js"></script>
-    <!-- FontAwesome -->
-    <script src="~/Scripts/all.js"></script>
-    <!-- Validate Bootstrap-->
-    <script src="~/Scripts/bootstrap-validate.js"></script>
-    <!-- Popper-->
-    <script src="~/Scripts/popper.min.js"></script>
     @RenderBody()
 
-
-    @Styles.RenderFormat("<link href=\"{0}?v=" + "v1.0" + "\" rel=\"stylesheet\"/>", "~/bundles/jslayoutlimpo")
+    @Scripts.RenderFormat(CONSTANTES.ScriptVersion, "~/bundles/jslayoutlimpo")
 
     @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
     {
@@ -107,3 +87,4 @@
 
 </body>
 </html>
+

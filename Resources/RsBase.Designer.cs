@@ -22,7 +22,7 @@ namespace PrjUcbWeb.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class RsBase {
+    public class RsBase {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace PrjUcbWeb.Resources {
         ///   Retorna a instância de ResourceManager armazenada em cache usada por essa classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PrjUcbWeb.Resources.RsBase", typeof(RsBase).Assembly);
@@ -51,7 +51,7 @@ namespace PrjUcbWeb.Resources {
         ///   pesquisas de recursos que usam essa classe de recurso de tipo de alta segurança.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,11 +61,56 @@ namespace PrjUcbWeb.Resources {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a administrador.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Administrador.
         /// </summary>
-        internal static string ADMINISTRADOR {
+        public static string ADMINISTRADOR {
             get {
                 return ResourceManager.GetString("ADMINISTRADOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Inicio.
+        /// </summary>
+        public static string INICIO {
+            get {
+                return ResourceManager.GetString("INICIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Listagem de Usuários.
+        /// </summary>
+        public static string LISTAGEM_USUARIO {
+            get {
+                return ResourceManager.GetString("LISTAGEM_USUARIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Login.
+        /// </summary>
+        public static string LOGIN {
+            get {
+                return ResourceManager.GetString("LOGIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a PrjUcbWeb.
+        /// </summary>
+        public static string PRJUCBWEB {
+            get {
+                return ResourceManager.GetString("PRJUCBWEB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Professor.
+        /// </summary>
+        public static string PROFESSOR {
+            get {
+                return ResourceManager.GetString("PROFESSOR", resourceCulture);
             }
         }
     }
