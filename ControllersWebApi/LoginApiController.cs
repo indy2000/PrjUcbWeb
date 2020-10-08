@@ -54,10 +54,10 @@ namespace PrjUcbWeb.ControllersWebApi
 
         [HttpGet]
         [Route("api/login")]
-        public async Task<ApiRetorno<UsuarioModels>> getLogin(String usuario, String senha)
+        public async Task<ApiRetorno<Usuario>> getLogin(String usuario, String senha)
         {
-            ApiRetorno<UsuarioModels> retorno = new ApiRetorno<UsuarioModels>();
-            UsuarioModels objeto = new UsuarioModels();
+            ApiRetorno<Usuario> retorno = new ApiRetorno<Usuario>();
+            Usuario objeto = new Usuario();
 
             MySqlDatabase = new MySqlDatabase();
             var sql = this.MySqlDatabase.Connection.CreateCommand() as MySqlCommand;
@@ -74,14 +74,14 @@ namespace PrjUcbWeb.ControllersWebApi
                 {
                     while (await reader.ReadAsync())
                     {
-                        objeto = new UsuarioModels
+                        objeto = new Usuario
                         {
                             id = Convert.ToInt64(reader["ID"]),
                             nome = reader["NOME"].ToString(),
                             usuario = reader["USUARIO"].ToString(),
                             email = reader["EMAIL"].ToString(),
                             senha = reader["SENHA"].ToString(),
-                            tipo_usuario = Convert.ToInt64(reader["TIPO_USUARIO"])
+                            tipo_usuario = Convert.ToInt64(reader["TIPO_USUARIO"]).ToString()
                         };
                     }
                 }

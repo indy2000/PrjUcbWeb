@@ -8,53 +8,386 @@
 
 @section styles
 {
-	@Styles.RenderFormat(CONSTANTES.StyleVersion, "~/Content/cssDataTable")
+    @Styles.RenderFormat(CONSTANTES.StyleVersion, "~/Content/cssDataTable")
 }
 
 @section scripts
 	{
-	@Scripts.RenderFormat(CONSTANTES.ScriptVersion, "~/bundles/jsDataTable")
+    @Scripts.RenderFormat(CONSTANTES.ScriptVersion, "~/bundles/jsDataTable")
 
-	<script>
+    <script>
+
+    var rows_selected = [];
 	$(document).ready(function()
-	{
-		$("#iDataTable").DataTable({
-            "ajax": {
-                'url': 'api/getUsuario',
-				'type': 'GET',
-				 "dataSrc": ""
-			}, //"ajax" : "data",
-			"columns" : [
-				{ "data": "nome" },
-				{ "data": "usuario" },
-				{ "data": "email" },
-				{ "data": "tipo_usuario"},
-			],
-			columnDefs : [
-				{ targets : [3],
+    {
+        //$('#txtSearch').disableAutoFill();
+        var oDataTable;
+        
+        oDataTable = $("#iDataTable").DataTable({
+            dom: "Bfrti",
+            serverSide: true,
+            processing: true,
+            deferRender: true,
+            searching: true,
+            ajax: {
+                url: 'api/getUsuario',
+                type: 'GET',
+                dataSrc: ""
+            }, //"ajax" : "data",
+            columns: [
+				{ title: "<input name='select_all' value='1' type='checkbox'>" },
+                { data: "id", title: "Id", orderable: true},
+                { data: "nome", title: "Nome", orderable: true },
+                { data: "usuario", title: "Usuario", orderable: true },
+                { data: "email", title: "E-mail", orderable: false },
+                { data: "tipo_usuario", title: "Tipo Usuário", orderable: false },
+            ],
+            drawCallback: function () {
+                var api = this.api();
+                    var len = api.page.len();
+                    if (len === -1) {
+                        rows_selected = api.rows( {page:'current'} ).data().map(p => p.id)
+                    }
+				//$("#iDataTable").columns.adjust();
+                ResizeTable("iDataTableLayout");
+            },
+            columnDefs: [
+                {
+                    targets: [ 2, 4, 5],
+                    searcheable: false
+                },
+				{
+                        targets: 0,
+                        searchable: false,
+                        orderable: false,
+                        width: '1%',
+                        //className: 'dt-body-center',
+                        render: function (data, type, full, meta) {
+                            return "<input type='checkbox'></input>";
+                        }
+                    },
+				{ targets : [5],
 				  render : function (data, type, row) {
                       return data == '1' ? '@Html.Raw(Tipo_Usuario.Administrador)' : '@Html.Raw(Tipo_Usuario.Professor)';
 				  }
 				}
-			]
-		});
+            ]
+            ,
+            buttons: buttonsDataTable,
+			rowCallback: function(row, data, dataIndex) {
+                     // Get row ID
+                     var rowId = data.id;
+
+                     // If row ID is in the list of selected row IDs
+                     if($.inArray(rowId, rows_selected) !== -1){
+                        $(row).find('input[type="checkbox"]').prop('checked', true);
+                        $(row).addClass('selected');
+                     }
+                }
+        });
+
+        $('#txtSearch').val($('#iDataTable').DataTable().search());
+            $('#txtSearch').keyup(function () {
+                $('#iDataTable').DataTable().search($(this).val()).draw();
+                rows_selected = [];
+            });
+
+        // Handle click on checkbox
+            $('#iDataTable tbody').on('click', 'input[type="checkbox"]', function (e) {
+                var $row = $(this).closest('tr');
+
+                // Get row data
+                var rowId = $('#iDataTable').DataTable().row($row).data().id;
+
+                var index = $.inArray(rowId, rows_selected);
+
+                // If checkbox is checked and row ID is not in list of selected row IDs
+                if (this.checked && index === -1) {
+                    rows_selected.push(rowId);
+
+                    // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
+                } else if (!this.checked && index !== -1) {
+                    rows_selected.splice(index, 1);
+                }
+
+                if (this.checked) {
+                    $row.addClass('selected');
+                } else {
+                    $row.removeClass('selected');
+                }
+
+
+                if ($("input[name='select_all']").prop("checked")) {
+
+                    //Exibe quantidade de linhas selecionadas
+                    //rowsSelectedMessage()
+                    //$("#dtLegendRecordsTotal").show();
+
+                } else {
+
+                    //Esconde quantidade de linhas selecionadas
+                    //rowsSelectedMessage()
+                    //$("#dtLegendRecordsTotal").hide();
+                }
+
+                // Prevent click event from propagating to parent
+                e.stopPropagation();
+            });
+
+        // Handle click on table cells with checkboxes
+            $('#iDataTable').on('click', 'tbody td, thead th:first-child', function (e) {
+                $(this).parent().find('input[type="checkbox"]').trigger('click');
+            });
+
+            // Handle click on "Select all" control
+             $('thead input[name="select_all"]', $('#iDataTable').DataTable().table().container()).on('click', function (e) {
+                if (this.checked) {
+                    $('#iDataTable tbody input[type="checkbox"]:not(:checked)').trigger('click');
+
+                    //Exibe quantidade de linhas selecionadas
+                    //rowsSelectedMessage();
+                    //$("#dtLegendRecordsTotal").show();
+
+                } else {
+                    $('#iDataTable tbody input[type="checkbox"]:checked').trigger('click');
+
+                    //rowsSelectedMessage();
+                    //$("#dtLegendRecordsTotal").hide();
+                }
+
+                // Prevent click event from propagating to parent
+                e.stopPropagation();
+            });
 
     });
-	</script>
+        
+        $("#iCriarCadastro").on("click", function () {
+            /*if (!$("#iNomeModal").val()) {
+                Notificar("", "Obrigatório preencher", "warning");
+                return;
+            }*/
+            if (ValidaCamposObrigatorios(false)) {
+                Notificar("@RsBase.ATENCAO_", "@String.Format(RsBase.PREENCHIMENTO_OBRIGATORIO)", "warning")
+                return false;
+            }
+
+            if ($('#iTipoUsuarioModal option:selected').val() == 0) {
+                Notificar("@RsBase.ATENCAO_", "Obrigatório selecionar tipo de usuário!", "warning")
+                return false;
+            }
+
+            $('#modal-Cadastro').modal('hide');
+            ShowPageLoading();
+
+            const link = '@String.Concat(CONSTANTES.URLPortal, "/api/UsuarioApi/Cadastrar")';
+
+            $.ajax({
+                url: link,
+                type: 'POST',
+                data: {
+
+                    Nome : $('#iNomeModal').val(),
+                    Email : $('#iEmailModal').val(),
+                    Usuario : $('#iUsuarioModal').val(),
+                    Senha : $('#iSenhaModal').val(),
+                    Tipo_Usuario : $("#iTipoUsuarioModal option:selected").val()
+                    
+                },
+                error: function (e) {
+                    console.log(e);
+                },
+                dataSrc: function (d) {
+                    return d.data;
+                }
+            })
+            .done(function (data) {
+
+                if (data.ok) {
+                    
+                   HidePageLoading();
+                    $('#iDataTable').DataTable().draw();
+                    Notificar('@RsBase.INFORMACAO', 'Cadastro realizado com sucesso!', 'info')
+
+                    
+                }
+                else if (data.mensagem || data.exception) {
+                    if (data.mensagem) {
+                        HidePageLoading();
+                        Notificar('@RsBase.ATENCAO_', data.mensagem, 'warning')
+                    }
+                    else {
+                        HidePageLoading();
+                        Notificar('@RsBase.ATENCAO_', data.exception, 'warning')
+                    }
+                }
+            });
+        });
+
+        function btnExcluir() {
+            if (rows_selected.length < 1) {
+                Notificar('@RsBase.ATENCAO_', '@RsBase.NENHUM_REGISTRO', 'warning'); 
+                return false
+            }
+            else {
+                Swal.fire({
+                            type: 'warning',
+                            title: 'Tem certeza que deseja excluir estes registros? A ação não poderá ser desfeita!',
+                            showCancelButton: true,
+                            cancelButtonText: 'Não',
+                            confirmButtonText: 'Sim'
+                        }).
+                            then((result) => {
+                                if (result.value) {
+                                    ShowPageLoading();
+
+                                    const link = '@String.Concat(CONSTANTES.URLPortal, "/api/UsuarioApi/Excluir")';
+
+                                    $.ajax({
+                                        url: link,
+                                        type: 'POST',
+                                        data: {
+
+                                            ids: rows_selected
+
+                                        },
+                                        error: function (e) {
+                                            console.log(e);
+                                        },
+                                        dataSrc: function (d) {
+                                            return d.data;
+                                        }
+                                    })
+                                        .done(function (data) {
+
+                                            if (data.ok) {
+                                                HidePageLoading();
+                                                $('#iDataTable').DataTable().draw();
+                                                Notificar('@RsBase.INFORMACAO', 'Exclusão realizada com sucesso!', 'info')
+
+
+                                            }
+                                            else if (data.mensagem || data.exception) {
+                                                if (data.mensagem) {
+                                                    HidePageLoading();
+                                                    Notificar('@RsBase.ATENCAO_', data.mensagem, 'info')
+                                                }
+                                                else {
+                                                    HidePageLoading();
+                                                    Notificar('@RsBase.ATENCAO_', data.exception, 'info')
+                                                }
+                                            }
+                                        });
+                                }
+                                else {
+                                    rows_selected = [];
+                                }
+                            });
+            }
+            
+        }
+
+
+    </script>
 }
 
+<div class="col-auto mr-auto">
+    <h4 class="title-page"><i class="fas fa-user-plus"></i> @ViewBag.Title</h4>
 
-<div id="iDataTableLayout" class="mt-4 pl-4 pr-4">
-	<table id="iDataTable" class="display" style="width:100%">
-		<thead>
-			<tr>
-				<th>Nome</th>
-				<th>Usuário</th>
-				<th>E-mail</th>
-				<th>Tipo Usuário</th>
-			</tr>
-		</thead>
-		<tfoot>
-		</tfoot>
-	</table>
+    <div id="iDiv" class="text-right pr-5 ">
+
+
+        <input type="text" class="input-search" id="txtSearch" placeholder="@RsBase.ID_OU_USUARIO" autocomplete="off">
+        <i class="la la-search la-2x" style="color: #999"></i>
+
+        <button id="iBtnCadastrar" type="button" class="btn btn-success mx-1" href="#" data-toggle="modal" data-target="#modal-Cadastro">@RsBase.CADASTRAR</button>
+  
+            <button class="btn btn-default btn-add" type="button" title="Opções" data-toggle="dropdown" aria- aria-haspopup="true" aria-expanded="false">
+                <i class="la la-ellipsis-v la-2x" style="color: #999"></i>
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown">
+                <a class="dropdown-item" href="#" onclick="$('.buttons-excel').click(); return false;">@RsBase.EXPORTAR</a>
+                <a class="dropdown-item" id="btnExcluir" href="#" onclick="btnExcluir()">@RsBase.EXCLUIR</a>
+            </div>
+            
+    </div>
 </div>
+
+
+<div id="iDataTableLayout" class="mt-4 pl-5 pr-5">
+    <table id="iDataTable" class="display" style="width:100%">
+        @*<thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Usuário</th>
+                    <th>E-mail</th>
+                    <th>Tipo Usuário</th>
+                </tr>
+            </thead>
+            <tfoot>
+            </tfoot>*@
+    </table>
+</div>
+
+<!--Modal Cadastro-->
+<div class="modal" id="modal-Cadastro">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-muted">@RsBase.CADASTRAR_USUARIO</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="iNomeModal">@RsBase.NOME:</label>
+                        <input type="text" class="form-control obrigatorio" id="iNomeModal">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label for="iEmailModal">@RsBase.EMAIL:</label>
+                        <input type="text" class="form-control obrigatorio" id="iEmailModal">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label for="iUsuarioModal">@RsBase.USUARIO:</label>
+                        <input type="text" class="form-control obrigatorio" id="iUsuarioModal">
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label for="iSenhaModal">@RsBase.SENHA:</label>
+                        <input type="password" class="form-control obrigatorio" id="iSenhaModal">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label>@RsBase.TIPO_USUARIO:</label>
+                        <select class="form-control" id="iTipoUsuarioModal">
+                            <option selected value="0">Selecione</option>
+                            <option value="1">Administrador</option>
+                            <option value="2">Professor</option>
+                        </select>
+                    </div>
+                </div>
+                
+
+                <div class="form-group col-sm-12" style="padding: 15px;">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-danger" id="iCancelar" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success" id="iCriarCadastro">@RsBase.GRAVAR</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-->
+<!--Modal Parcial-->

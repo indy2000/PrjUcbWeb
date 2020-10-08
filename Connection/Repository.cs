@@ -45,7 +45,33 @@ namespace PrjUcbWeb.Connection
             }
         }
 
-        
+        public async Task Delete(IList<T> entidades)
+        {
+            using (ISession session = MySQLSessionFactory.StartSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach(T e in entidades)
+                        {
+                            await session.DeleteAsync(e);
+                        }
+                        await session.FlushAsync();
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        if (!transaction.WasCommitted)
+                        {
+                            transaction.Rollback();
+                        }
+                        throw new Exception("Erro ao excluir entidade: " + ex.Message);
+                    }
+                }
+            }
+        }
+
 
         public void Insert(T entidade)
         {

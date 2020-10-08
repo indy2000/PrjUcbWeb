@@ -120,6 +120,36 @@
   <data name="ADMINISTRADOR" xml:space="preserve">
     <value>Administrador</value>
   </data>
+  <data name="ATENCAO_" xml:space="preserve">
+    <value>Atenção!</value>
+  </data>
+  <data name="CADASTRAR" xml:space="preserve">
+    <value>Cadastrar</value>
+  </data>
+  <data name="CADASTRAR_USUARIO" xml:space="preserve">
+    <value>Cadastrar Usuário</value>
+  </data>
+  <data name="CRIAR" xml:space="preserve">
+    <value>Criar</value>
+  </data>
+  <data name="EMAIL" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="EXCLUIR" xml:space="preserve">
+    <value>Excluir</value>
+  </data>
+  <data name="EXPORTAR" xml:space="preserve">
+    <value>Exportar</value>
+  </data>
+  <data name="GRAVAR" xml:space="preserve">
+    <value>Gravar</value>
+  </data>
+  <data name="ID_OU_USUARIO" xml:space="preserve">
+    <value>Usuário ou Id</value>
+  </data>
+  <data name="INFORMACAO" xml:space="preserve">
+    <value>Informação!</value>
+  </data>
   <data name="INICIO" xml:space="preserve">
     <value>Inicio</value>
   </data>
@@ -129,10 +159,28 @@
   <data name="LOGIN" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="NENHUM_REGISTRO" xml:space="preserve">
+    <value>Nenhum registro selecionado!</value>
+  </data>
+  <data name="NOME" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="PREENCHIMENTO_OBRIGATORIO" xml:space="preserve">
+    <value>Preenchimento obrigatório</value>
+  </data>
   <data name="PRJUCBWEB" xml:space="preserve">
     <value>PrjUcbWeb</value>
   </data>
   <data name="PROFESSOR" xml:space="preserve">
     <value>Professor</value>
+  </data>
+  <data name="SENHA" xml:space="preserve">
+    <value>Senha</value>
+  </data>
+  <data name="TIPO_USUARIO" xml:space="preserve">
+    <value>Tipo de Usuário</value>
+  </data>
+  <data name="USUARIO" xml:space="preserve">
+    <value>Usuário</value>
   </data>
 </root>

@@ -3,9 +3,14 @@
 
 @{
 	ViewBag.Title = RsBase.PRJUCBWEB + " - " + RsBase.LOGIN;
-Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+	Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
+@section styles
+{
+	@Styles.RenderFormat(CONSTANTES.StyleVersion, "~/Content/css")
+	
+}
 
 @section scripts
 {

@@ -70,6 +70,96 @@ namespace PrjUcbWeb.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Atenção!.
+        /// </summary>
+        public static string ATENCAO_ {
+            get {
+                return ResourceManager.GetString("ATENCAO_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Cadastrar.
+        /// </summary>
+        public static string CADASTRAR {
+            get {
+                return ResourceManager.GetString("CADASTRAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Cadastrar Usuário.
+        /// </summary>
+        public static string CADASTRAR_USUARIO {
+            get {
+                return ResourceManager.GetString("CADASTRAR_USUARIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Criar.
+        /// </summary>
+        public static string CRIAR {
+            get {
+                return ResourceManager.GetString("CRIAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a E-mail.
+        /// </summary>
+        public static string EMAIL {
+            get {
+                return ResourceManager.GetString("EMAIL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Excluir.
+        /// </summary>
+        public static string EXCLUIR {
+            get {
+                return ResourceManager.GetString("EXCLUIR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Exportar.
+        /// </summary>
+        public static string EXPORTAR {
+            get {
+                return ResourceManager.GetString("EXPORTAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Gravar.
+        /// </summary>
+        public static string GRAVAR {
+            get {
+                return ResourceManager.GetString("GRAVAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário ou Id.
+        /// </summary>
+        public static string ID_OU_USUARIO {
+            get {
+                return ResourceManager.GetString("ID_OU_USUARIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Informação!.
+        /// </summary>
+        public static string INFORMACAO {
+            get {
+                return ResourceManager.GetString("INFORMACAO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Inicio.
         /// </summary>
         public static string INICIO {
@@ -97,6 +187,33 @@ namespace PrjUcbWeb.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nenhum registro selecionado!.
+        /// </summary>
+        public static string NENHUM_REGISTRO {
+            get {
+                return ResourceManager.GetString("NENHUM_REGISTRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nome.
+        /// </summary>
+        public static string NOME {
+            get {
+                return ResourceManager.GetString("NOME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Preenchimento obrigatório.
+        /// </summary>
+        public static string PREENCHIMENTO_OBRIGATORIO {
+            get {
+                return ResourceManager.GetString("PREENCHIMENTO_OBRIGATORIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a PrjUcbWeb.
         /// </summary>
         public static string PRJUCBWEB {
@@ -111,6 +228,33 @@ namespace PrjUcbWeb.Resources {
         public static string PROFESSOR {
             get {
                 return ResourceManager.GetString("PROFESSOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Senha.
+        /// </summary>
+        public static string SENHA {
+            get {
+                return ResourceManager.GetString("SENHA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Tipo de Usuário.
+        /// </summary>
+        public static string TIPO_USUARIO {
+            get {
+                return ResourceManager.GetString("TIPO_USUARIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário.
+        /// </summary>
+        public static string USUARIO {
+            get {
+                return ResourceManager.GetString("USUARIO", resourceCulture);
             }
         }
     }

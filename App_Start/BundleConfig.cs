@@ -39,6 +39,7 @@ namespace PrjUcbWeb
                       "~/Content/style.css",
                       "~/Content/line-awesome.css",
                       "~/Content/font-eva.css"
+                      ,"~/Content/site.css"
                       ));
 
             //**************** Layout Limpo ******************
@@ -62,7 +63,9 @@ namespace PrjUcbWeb
                       "~/Content/bootstrap-tagsinput.css",
                       "~/Content/connect.css",
                       "~/Content/bootstrap-datepicker.css",
-                      "~/Content/select2/select2.css"));
+                      "~/Content/select2/select2.css"
+                      ,"~/Content/site.css"
+                      ));
 
 
             bundles.Add(new ScriptBundle("~/bundles/jslayoutlimpo").Include(

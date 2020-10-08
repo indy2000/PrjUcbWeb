@@ -19,7 +19,7 @@
 
     <title>@ViewBag.Title</title>
 
-    @Styles.RenderFormat("<link href=\"{0}?v=" + "v1.0" + "\" rel=\"stylesheet\"/>", "~/Content/csslayoutlimpo")
+    @Styles.RenderFormat(CONSTANTES.StyleVersion, "~/Content/csslayoutlimpo")
 
     <!--[if lt IE 9]>
         <script src="../assets/js/ie8-responsive-file-warning.js"></script>
