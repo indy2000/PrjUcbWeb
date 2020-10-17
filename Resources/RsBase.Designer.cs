@@ -313,7 +313,7 @@ namespace PrjUcbWeb.Resources {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Preenchimento obrigatório.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Preenchimento obrigatorio.
         /// </summary>
         public static string PREENCHIMENTO_OBRIGATORIO {
             get {

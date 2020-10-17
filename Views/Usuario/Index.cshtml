@@ -229,7 +229,7 @@
                 return;
             }*/
             if (ValidaCamposObrigatorios(false)) {
-                Notificar("@RsBase.ATENCAO_", "@String.Format(RsBase.PREENCHIMENTO_OBRIGATORIO)", "warning")
+                Notificar("@RsBase.ATENCAO_", "@RsBase.PREENCHIMENTO_OBRIGATORIO", "warning")
                 return false;
             }
 
@@ -291,7 +291,7 @@
 
         $("#btnAlterarCadastro").on("click", function () {
             if (ValidaCamposObrigatorios(false)) {
-                Notificar("@RsBase.ATENCAO_", "@String.Format(RsBase.PREENCHIMENTO_OBRIGATORIO)", "warning")
+                Notificar("@RsBase.ATENCAO_", "@RsBase.PREENCHIMENTO_OBRIGATORIO", "warning")
                 return false;
             }
 
