@@ -1,0 +1,636 @@
+﻿@using PrjUcbWeb.Enums
+@using PrjUcbWeb.Resources
+
+@{
+    ViewBag.Title = RsBase.LISTAGEM_TURMA;
+    Layout = "~/Views/Shared/_LayoutLimpo.cshtml";
+}
+
+@section styles
+{
+    @Styles.RenderFormat(CONSTANTES.StyleVersion, "~/Content/cssDataTable")
+}
+
+@section scripts
+	{
+    @Scripts.RenderFormat(CONSTANTES.ScriptVersion, "~/bundles/jsDataTable")
+
+    <script>
+        var _id;
+        var oDatatable;
+    var rows_selected = [];
+	$(document).ready(function()
+    {
+        $('#btnAlterarCadastro').hide();
+        //$('#txtSearch').disableAutoFill();
+       
+    });
+
+        var handleDataTableButtons = function () {
+            "use strict";
+
+            //"Blfrtip"
+            oDatatable = $("#iDataTable").DataTable({
+                dom: "Bfrti",
+                columnDefs: [
+                    {
+                        targets: 0,
+                        searchable: false,
+                        orderable: false,
+                        width: '1%',
+                        className: 'dt-body-center',
+                        render: function (data, type, full, meta) {
+                            return "<input type='checkbox'></input>";
+                        }
+                    }
+                ],
+                select: {
+                    style: 'multi'
+                },
+                order: [[1, 'asc']],
+                serverSide: false,
+                searching: true,
+                processing: true,
+                ordering: true,
+                paging: true,
+                deferRender: true,
+                scrollResize: true,
+                autoWidth: false,
+                scrollY: '61vh',
+                scroller: {
+                    //loadingIndicator: true,
+                    rowHeight: 40,
+                    boundaryScale: 0.5,
+                    displayBuffer: 3
+                },
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+                ajax: {
+                    url: 'api/Turmaapi/getAllTurmas',
+                    type: 'GET',
+                    data: '',
+                    error: function (e) {
+                        console.log(e);
+                    },
+                    dataSrc: function (d) {
+                        return d.data;
+                    }
+                },
+                infoCallback: function (oSettings, iStart, iEnd, iMax, iTotal, sPre) {
+
+                    var str = "@RsBase.INFODATATABLE";
+                    if (iTotal == 0) { iEnd = 0; iStart = 0; }
+                    str = str.replace("{0}", iStart).replace("{1}", iEnd).replace("{2}", iTotal);
+                    $("#dtLegend").html(str);
+
+                    return "";
+                },
+                rowCallback: function(row, data, dataIndex){
+                     // Get row ID
+                     var rowId = data.id;
+
+                     // If row ID is in the list of selected row IDs
+                     if($.inArray(rowId, rows_selected) !== -1){
+                        $(row).find('input[type="checkbox"]').prop('checked', true);
+                        $(row).addClass('selected');
+                     }
+                },
+                //pageLength: 10,
+                language: traducaoDataTableSimples,
+                buttons: buttonsDataTable,
+                columns: [
+                    { title: "<input name='select_all' value='1' type='checkbox'>" },
+                    { data: "cod_turma", title: "@RsBase.COD_TURMA" },
+                    { data: "disciplina", title: "@RsBase.DISCIPLINA", orderable: true },
+                    { data: "professor", title: "@RsBase.PROFESSOR" },
+                    { data: "horario", title: "@RsBase.HORARIO" },
+                    { data: "quant_Alunos", title: "@RsBase.QUANTIDADE_ALUNOS" }
+                    
+                ]
+            });
+
+            $('#txtSearch').val(oDatatable.search());
+            $('#txtSearch').keyup(function () {
+                rows_selected = [];
+                oDatatable.search($(this).val()).draw();
+            });          
+
+            // Handle click on checkbox
+            $('#iDataTable tbody').on('click', 'input[type="checkbox"]', function (e) {
+                var $row = $(this).closest('tr');
+
+                // Get row data
+                var rowId = oDatatable.row($row).data().id;
+
+                var index = $.inArray(rowId, rows_selected);
+
+                // If checkbox is checked and row ID is not in list of selected row IDs
+                if (this.checked && index === -1) {
+                    rows_selected.push(rowId);
+
+                    // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
+                } else if (!this.checked && index !== -1) {
+                    rows_selected.splice(index, 1);
+                }
+
+                if (this.checked) {
+                    $row.addClass('selected');
+                } else {
+                    $row.removeClass('selected');
+                }
+
+                // Prevent click event from propagating to parent
+                e.stopPropagation();
+            });
+
+
+            $('#iDataTable tbody').on('click', 'tr', function () {
+                if (oDatatable.row(this).data() != null) {
+
+                    ShowPageLoading();
+
+                    _id = oDatatable.row(this).data().id;
+
+                    $('#modal-Cadastro').modal('show');
+                    $('#modal-Cadastro').find('.modal-title').text('@Html.Raw(RsBase.ALTERAR_TURMA)');
+
+                    $('#iCriarCadastro').hide();
+                    $('#btnAlterarCadastro').show();
+
+                    const link = '@String.Concat(CONSTANTES.URLPortal, "/api/Turmaapi/GetById?id=")';
+
+                    $.ajax({
+                        url: link+_id,
+                        type: 'GET',
+                        dataType: 'json',
+                        error: function (e) {
+                            console.log(e);
+                        },
+                        dataSrc: function (d) {
+                            return d.data;
+                        }
+                    })
+                    .done(async function (data) {
+
+                        if (data.ok) {
+
+                            $('#iCodTurmaModal').val(data.objeto.cod_turma);
+                            $('#iHoraIniModal option:selected').text(data.objeto.hora_Inicio).change();
+                            $('#iHoraFimModal option:selected').text(data.objeto.hora_Final).change();
+                            await AddSelect('iProfessorModal', '@CONSTANTES.URLPortal/api/Usuarioapi/GetComboProfessor', @CONSTANTES.PaginacaoRegistros, null, null, data.objeto.id_Professor, "@RsBase.SELECIONE", false);
+                            //$('#iProfessorModal').val(data.objeto.id_Professor).change();
+                            $('#iQuantAlunosModal').val(data.objeto.quant_Alunos).change();
+                            $('#iDisciplinaModal').val(data.objeto.disciplina);
+                            HidePageLoading();
+
+                        }
+                        else if (data.mensagem || data.exception) {
+                            if (data.mensagem) {
+                                HidePageLoading();
+                                Notificar('@RsBase.ATENCAO_', data.mensagem, 'warning')
+                            }
+                            else {
+                                HidePageLoading();
+                                Notificar('@RsBase.ATENCAO_', data.exception, 'warning')
+                            }
+                        }
+                    });
+
+                    //TODO Rotina e API de Alteração
+
+                    // Controller por fazer  
+                    // window.location.href = url.replace('__id__', _id);
+                }
+            });
+
+            // Handle click on table cells with checkboxes
+            $('#iDataTable').on('click', 'tbody td, thead th:first-child', function (e) {
+                $(this).parent().find('input[type="checkbox"]').trigger('click');
+            });
+
+            // Handle click on "Select all" control
+            $('thead input[name="select_all"]', oDatatable.table().container()).on('click', function (e) {
+                if (this.checked) {
+                    $('#iDataTable tbody input[type="checkbox"]:not(:checked)').trigger('click');
+                } else {
+                    $('#iDataTable tbody input[type="checkbox"]:checked').trigger('click');
+                }
+
+                // Prevent click event from propagating to parent
+                e.stopPropagation();
+            });
+
+            // Handle table draw event
+            oDatatable.on('draw', function () {
+                // Update state of "Select all" control
+                updateDataTableSelectAllCtrl(oDatatable);
+
+            });
+
+        },
+            TableManageButtons = function () {
+                "use strict";
+                return {
+                    init: function () {
+                        handleDataTableButtons();
+                    }
+                }
+            }();
+
+        TableManageButtons.init();
+
+        $("#iCriarCadastro").on("click", function () {
+            /*if (!$("#iNomeModal").val()) {
+                Notificar("", "Obrigatório preencher", "warning");
+                return;
+            }*/
+            if (ValidaCamposObrigatorios(false)) {
+                Notificar("@RsBase.ATENCAO_", "@String.Format(RsBase.PREENCHIMENTO_OBRIGATORIO)", "warning")
+                return false;
+            }
+
+            if (parseInt($('#iHoraIniModal option:selected').val()) == 0 || parseInt($('#iHoraFimModal option:selected').val()) == 0) {
+                Notificar("@RsBase.ATENCAO_", "Obrigatório selecionar horários de início e término da aula!", "warning")
+                return false;
+            }
+
+            if (parseInt($('#iHoraIniModal option:selected').val()) > parseInt($('#iHoraFimModal option:selected').val())) {
+                Notificar("@RsBase.ATENCAO_", "Horário de início não pode ser mais tarde que horário de término!", "warning")
+                return false;
+            }
+
+            $('#modal-Cadastro').modal('hide');
+            ShowPageLoading();
+
+            const link = '@String.Concat(CONSTANTES.URLPortal, "/api/Turmaapi/Cadastrar")';
+
+            $.ajax({
+                url: link,
+                type: 'POST',
+                data: {
+
+                    cod_turma : $('#iCodTurmaModal').val(),
+                    disciplina : $('#iDisciplinaModal').val(),
+                    hora_Inicio : $('#iHoraIniModal option:selected').text(),
+                    hora_Final : $('#iHoraFimModal option:selected').text(),
+                    quant_Alunos: $("#iQuantAlunosModal option:selected").val(),
+                    id_Professor : $("#iProfessorModal").val()
+
+                },
+                error: function (e) {
+                    console.log(e);
+                },
+                dataSrc: function (d) {
+                    return d.data;
+                }
+            })
+            .done(function (data) {
+
+                if (data.ok) {
+
+                   HidePageLoading();
+                    oDatatable.ajax.url('api/Turmaapi/getAllTurmas').load();
+                    //oDatatable.draw();
+                    Notificar('@RsBase.INFORMACAO', 'Cadastro realizado com sucesso!', 'info')
+
+
+                }
+                else if (data.mensagem || data.exception) {
+                    if (data.mensagem) {
+                        HidePageLoading();
+                        Notificar('@RsBase.ATENCAO_', data.mensagem, 'warning')
+                    }
+                    else {
+                        HidePageLoading();
+                        Notificar('@RsBase.ATENCAO_', data.exception, 'warning')
+                    }
+                }
+            });
+        });
+
+        $("#btnAlterarCadastro").on("click", function () {
+            if (ValidaCamposObrigatorios(false)) {
+                Notificar("@RsBase.ATENCAO_", "@String.Format(RsBase.PREENCHIMENTO_OBRIGATORIO)", "warning")
+                return false;
+            }
+
+            if (parseInt($('#iHoraIniModal option:selected').val()) == 0 || parseInt($('#iHoraFimModal option:selected').val()) == 0) {
+                Notificar("@RsBase.ATENCAO_", "Obrigatório selecionar horários de início e término da aula!", "warning")
+                return false;
+            }
+
+            if (parseInt($('#iHoraIniModal option:selected').val()) > parseInt($('#iHoraFimModal option:selected').val())) {
+                Notificar("@RsBase.ATENCAO_", "Horário de início não pode ser mais tarde que horário de término!", "warning")
+                return false;
+            }
+
+            $('#modal-Cadastro').modal('hide');
+            ShowPageLoading();
+
+            const link = '@String.Concat(CONSTANTES.URLPortal, "/api/Turmaapi/Alterar")';
+
+            $.ajax({
+                url: link,
+                type: 'POST',
+                data: {
+                    id: _id,
+                    cod_turma : $('#iCodTurmaModal').val(),
+                    disciplina : $('#iDisciplinaModal').val(),
+                    hora_Inicio : $('#iHoraIniModal option:selected').text(),
+                    hora_Final : $('#iHoraFimModal option:selected').text(),
+                    quant_Alunos: $("#iQuantAlunosModal option:selected").val(),
+                    id_Professor : $("#iProfessorModal").val()
+
+                },
+                error: function (e) {
+                    console.log(e);
+                },
+                dataSrc: function (d) {
+                    return d.data;
+                }
+            })
+            .done(function (data) {
+
+                if (data.ok) {
+
+                   HidePageLoading();
+                    oDatatable.ajax.url('api/Turmaapi/getAllTurmas').load();
+                    //oDatatable.draw();
+                    Notificar('@RsBase.INFORMACAO', 'Alteração realizada com sucesso!', 'info')
+
+
+                }
+                else if (data.mensagem || data.exception) {
+                    if (data.mensagem) {
+                        HidePageLoading();
+                        Notificar('@RsBase.ATENCAO_', data.mensagem, 'warning')
+                    }
+                    else {
+                        HidePageLoading();
+                        Notificar('@RsBase.ATENCAO_', data.exception, 'warning')
+                    }
+                }
+            });
+        });
+
+        function ModalAddSelect() {
+            $('#modal-Cadastro').modal('show');
+            AddSelect('iProfessorModal', '@CONSTANTES.URLPortal/api/Usuarioapi/GetComboProfessor', @CONSTANTES.PaginacaoRegistros, null, null, null, "@RsBase.SELECIONE", false);
+        }
+
+        function btnExcluir() {
+            if (rows_selected.length < 1) {
+                Notificar('@RsBase.ATENCAO_', '@RsBase.NENHUM_REGISTRO', 'warning');
+                return false
+            }
+            else {
+                Swal.fire({
+                            type: 'warning',
+                            title: 'Tem certeza que deseja excluir estes registros? A ação não poderá ser desfeita!',
+                            showCancelButton: true,
+                            cancelButtonText: 'Não',
+                            confirmButtonText: 'Sim'
+                        }).
+                            then((result) => {
+                                if (result.value) {
+                                    ShowPageLoading();
+
+                                    const link = 'api/TurmaApi/Excluir';
+
+                                    $.ajax({
+                                        url: link,
+                                        type: 'POST',
+                                        data: {
+
+                                            ids: rows_selected
+
+                                        },
+                                        error: function (e) {
+                                            console.log(e);
+                                        },
+                                        dataSrc: function (d) {
+                                            return d.data;
+                                        }
+                                    })
+                                        .done(function (data) {
+
+                                            if (data.ok) {
+                                                HidePageLoading();
+                                                
+                                                oDatatable.ajax.url('api/Turmaapi/getAllTurmas').load();
+                                                oDatatable.draw();
+                                                Notificar('@RsBase.INFORMACAO', 'Exclusão realizada com sucesso!', 'info')
+
+
+                                            }
+                                            else if (data.mensagem || data.exception) {
+                                                if (data.mensagem) {
+                                                    HidePageLoading();
+                                                    Notificar('@RsBase.ATENCAO_', data.mensagem, 'info')
+                                                }
+                                                else {
+                                                    HidePageLoading();
+                                                    Notificar('@RsBase.ATENCAO_', data.exception, 'info')
+                                                }
+                                            }
+                                        });
+                                }
+                                else {
+                                    rows_selected = [];
+                                }
+                            });
+            }
+
+        }
+
+
+    </script>
+}
+
+<div class="col-auto mr-auto">
+    <h4 class="title-page"><i class="fas fa-graduation-cap"></i> @ViewBag.Title</h4>
+
+    <div id="iDiv" class="text-right pr-5 ">
+
+
+        <input type="text" class="input-search" id="txtSearch" placeholder="@RsBase.CODTURMA_OU_PROF" autocomplete="off">
+        <i class="la la-search la-2x" style="color: #999"></i>
+
+        <button id="iBtnCadastrar" type="button" class="btn btn-success mx-1" href="#" onclick="ModalAddSelect()">@RsBase.CADASTRAR</button>
+
+        <button class="btn btn-default btn-add" type="button" title="Opções" data-toggle="dropdown" aria- aria-haspopup="true" aria-expanded="false">
+            <i class="la la-ellipsis-v la-2x" style="color: #999"></i>
+        </button>
+
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown">
+            <a class="dropdown-item" href="#" onclick="$('.buttons-excel').click(); return false;">@RsBase.EXPORTAR</a>
+            <a class="dropdown-item" id="btnExcluir" href="#" onclick="btnExcluir()">@RsBase.EXCLUIR</a>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="iDataTableLayout" class="mt-4 pl-5 pr-5">
+    <table id="iDataTable" class="display" style="width:100%">
+        @*<thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Usuário</th>
+                    <th>E-mail</th>
+                    <th>Tipo Usuário</th>
+                </tr>
+            </thead>
+            <tfoot>
+            </tfoot>*@
+    </table>
+</div>
+
+<!--Modal Cadastro-->
+<div class="modal" id="modal-Cadastro">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-muted">@RsBase.CADASTRAR_TURMA</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label for="iCodTurmaModal">@RsBase.COD_TURMA:</label>
+                        <input type="text" class="form-control obrigatorio" id="iCodTurmaModal">
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label>@RsBase.HORA_INICIO:</label>
+                        <select class="form-control" id="iHoraIniModal">
+                            <option selected value="0">Selecione</option>
+                            <option value="1">07:00</option>
+                            <option value="3">07:40</option>
+                            <option value="4">08:20</option>
+                            <option value="5">09:00</option>
+                            <option value="6">09:40</option>
+                            <option value="7">10:20</option>
+                            <option value="8">11:00</option>
+                            <option value="9">11:40</option>
+                            <option value="10">12:20</option>
+                            <option value="11">13:20</option>
+                            <option value="12">14:00</option>
+                            <option value="13">14:40</option>
+                            <option value="14">15:20</option>
+                            <option value="15">16:00</option>
+                            <option value="16">16:40</option>
+                            <option value="17">17:20</option>
+                            <option value="18">18:00</option>
+                            <option value="19">18:40</option>
+                            <option value="20">19:20</option>
+                            <option value="21">20:00</option>
+                            <option value="22">20:40</option>
+                            <option value="23">21:20</option>
+                            <option value="24">22:00</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label>@RsBase.HORA_FIM:</label>
+                        <select class="form-control" id="iHoraFimModal">
+                            <option selected value="0">Selecione</option>
+                            <option value="1">07:00</option>
+                            <option value="3">07:40</option>
+                            <option value="4">08:20</option>
+                            <option value="5">09:00</option>
+                            <option value="6">09:40</option>
+                            <option value="7">10:20</option>
+                            <option value="8">11:00</option>
+                            <option value="9">11:40</option>
+                            <option value="10">12:20</option>
+                            <option value="11">13:20</option>
+                            <option value="12">14:00</option>
+                            <option value="13">14:40</option>
+                            <option value="14">15:20</option>
+                            <option value="15">16:00</option>
+                            <option value="16">16:40</option>
+                            <option value="17">17:20</option>
+                            <option value="18">18:00</option>
+                            <option value="19">18:40</option>
+                            <option value="20">19:20</option>
+                            <option value="21">20:00</option>
+                            <option value="22">20:40</option>
+                            <option value="23">21:20</option>
+                            <option value="24">22:00</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="form-group col-sm-8">
+                        <label for="iProfessorModal">@RsBase.PROFESSOR:</label>
+                        <select class="form-control" id="iProfessorModal">
+                            <option value="" selected>Selecione</option>
+                        </select>
+                        @*<input type="text" class="form-control obrigatorio" id="iProfessorModal">
+                        @Html.DropDownList("select2Professor", new SelectList(new List<PrjUcbWeb.Models.ObjComboResult<String>>(), "Id", "Text"), RsBase.SELECIONE, new { @class = "form-control", @id = "iProfessorModal", @autocomplete = "off" })*@
+                    </div>
+
+                    <div class="form-group col-sm-3">
+                        <label>@RsBase.QUANT_ALUNOS:</label>
+                        <select class="form-control" id="iQuantAlunosModal">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-sm-8">
+                        <label for="iDisciplinaModal">@RsBase.DISCIPLINA:</label>
+                        <input type="text" class="form-control obrigatorio" id="iDisciplinaModal">
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-12" style="padding: 15px;">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-danger" id="iCancelar" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success" id="iCriarCadastro">@RsBase.GRAVAR</button>
+                        <button type="button" class="btn btn-success" id="btnAlterarCadastro">@RsBase.ALTERAR</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal-->
+<!--Modal Parcial-->

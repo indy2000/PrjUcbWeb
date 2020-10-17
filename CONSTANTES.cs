@@ -34,6 +34,8 @@ namespace PrjUcbWeb
             }
         }
 
+        public static Int32 PaginacaoRegistros = Int32.Parse(Convert.ToString(ConfigurationManager.AppSettings["PaginacaoRegistros"]));
+
         public static String URLPortal
         {
             get

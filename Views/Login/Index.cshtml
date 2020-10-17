@@ -3,12 +3,12 @@
 
 @{
 	ViewBag.Title = RsBase.PRJUCBWEB + " - " + RsBase.LOGIN;
-	Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+	Layout = "~/Views/Shared/_LayoutLimpo.cshtml";
 }
 
 @section styles
 {
-	@Styles.RenderFormat(CONSTANTES.StyleVersion, "~/Content/css")
+	
 	
 }
 
@@ -23,6 +23,18 @@
 			var user = $("#iUser").val();
 			var senha = $("#iPass").val();
 
+            if (!$("#iUser").val()) {
+                Notificar("@RsBase.ATENCAO_", "Usuário não pode estar em branco!", "warning")
+				return false;
+            }
+
+			if (!$("#iPass").val()) {
+                Notificar("@RsBase.ATENCAO_", "Senha não pode estar em branco!", "warning")
+                return false;
+            }
+
+            ShowPageLoading();
+
             $.ajax({
                 url: 'http://'+'@ConfigurationManager.AppSettings["CaminhoServidor"]' +'/api/logar?login=' + user + '&senha=' + senha,
 				type: 'GET',
@@ -33,7 +45,8 @@
 				}
 			}).done(function (data) {
 				if (data.ok) {
-					if (data.objeto != null) {
+                    if (data.objeto != null) {
+                        HidePageLoading();
 						alert(`Seja bem-vindo, ` + data.objeto.nome + '!');
                         //window.location = 'pag2.html';
                         window.location = "@Url.Action("Inicio", "Home")";

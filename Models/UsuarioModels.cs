@@ -29,4 +29,14 @@ namespace PrjUcbWeb.Models
     {
         public List<Int64> ids { get; set; }
     }
+
+    public class Alteracao_UsuarioModels
+    {
+        public Int64 Id { get; set; }
+        public String Nome { get; set; }
+        public String Usuario { get; set; }
+        public String Email { get; set; }
+        public String Senha { get; set; }
+        public Int64 Tipo_Usuario { get; set; }
+    }
 }

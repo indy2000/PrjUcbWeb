@@ -70,6 +70,33 @@ namespace PrjUcbWeb.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Alterar.
+        /// </summary>
+        public static string ALTERAR {
+            get {
+                return ResourceManager.GetString("ALTERAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Alterar Turma.
+        /// </summary>
+        public static string ALTERAR_TURMA {
+            get {
+                return ResourceManager.GetString("ALTERAR_TURMA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Alterar Usuário.
+        /// </summary>
+        public static string ALTERAR_USUARIO {
+            get {
+                return ResourceManager.GetString("ALTERAR USUARIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Atenção!.
         /// </summary>
         public static string ATENCAO_ {
@@ -88,6 +115,15 @@ namespace PrjUcbWeb.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Cadastrar Turma.
+        /// </summary>
+        public static string CADASTRAR_TURMA {
+            get {
+                return ResourceManager.GetString("CADASTRAR_TURMA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Cadastrar Usuário.
         /// </summary>
         public static string CADASTRAR_USUARIO {
@@ -97,11 +133,38 @@ namespace PrjUcbWeb.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Código de Turma.
+        /// </summary>
+        public static string COD_TURMA {
+            get {
+                return ResourceManager.GetString("COD_TURMA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Cod. Turma ou Professor.
+        /// </summary>
+        public static string CODTURMA_OU_PROF {
+            get {
+                return ResourceManager.GetString("CODTURMA_OU_PROF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Criar.
         /// </summary>
         public static string CRIAR {
             get {
                 return ResourceManager.GetString("CRIAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Disciplina.
+        /// </summary>
+        public static string DISCIPLINA {
+            get {
+                return ResourceManager.GetString("DISCIPLINA", resourceCulture);
             }
         }
         
@@ -142,11 +205,47 @@ namespace PrjUcbWeb.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Hora Fim.
+        /// </summary>
+        public static string HORA_FIM {
+            get {
+                return ResourceManager.GetString("HORA_FIM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Hora Inicio.
+        /// </summary>
+        public static string HORA_INICIO {
+            get {
+                return ResourceManager.GetString("HORA_INICIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Horário.
+        /// </summary>
+        public static string HORARIO {
+            get {
+                return ResourceManager.GetString("HORARIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário ou Id.
         /// </summary>
         public static string ID_OU_USUARIO {
             get {
                 return ResourceManager.GetString("ID_OU_USUARIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Exibindo {0} até {1} de um total de {2} registro(s)..
+        /// </summary>
+        public static string INFODATATABLE {
+            get {
+                return ResourceManager.GetString("INFODATATABLE", resourceCulture);
             }
         }
         
@@ -165,6 +264,15 @@ namespace PrjUcbWeb.Resources {
         public static string INICIO {
             get {
                 return ResourceManager.GetString("INICIO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Listagem de Turmas.
+        /// </summary>
+        public static string LISTAGEM_TURMA {
+            get {
+                return ResourceManager.GetString("LISTAGEM_TURMA", resourceCulture);
             }
         }
         
@@ -228,6 +336,33 @@ namespace PrjUcbWeb.Resources {
         public static string PROFESSOR {
             get {
                 return ResourceManager.GetString("PROFESSOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Quant. Alunos.
+        /// </summary>
+        public static string QUANT_ALUNOS {
+            get {
+                return ResourceManager.GetString("QUANT_ALUNOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Quantidade de Alunos.
+        /// </summary>
+        public static string QUANTIDADE_ALUNOS {
+            get {
+                return ResourceManager.GetString("QUANTIDADE_ALUNOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Selecione.
+        /// </summary>
+        public static string SELECIONE {
+            get {
+                return ResourceManager.GetString("SELECIONE", resourceCulture);
             }
         }
         

@@ -16,16 +16,18 @@
     @Scripts.RenderFormat(CONSTANTES.ScriptVersion, "~/bundles/jsDataTable")
 
     <script>
-
+        var _id;
+    var oDataTable;
     var rows_selected = [];
 	$(document).ready(function()
     {
+        $('#btnAlterarCadastro').hide();
         //$('#txtSearch').disableAutoFill();
-        var oDataTable;
+
         
         oDataTable = $("#iDataTable").DataTable({
             dom: "Bfrti",
-            serverSide: true,
+            serverSide: false,
             processing: true,
             deferRender: true,
             searching: true,
@@ -159,8 +161,68 @@
                 e.stopPropagation();
             });
 
+        $('#iDataTable tbody').on('click', 'tr', function () {
+                if ($('#iDataTable').DataTable().row(this).data() != null) {
+
+                    ShowPageLoading();
+
+                    _id = $('#iDataTable').DataTable().row(this).data().id;
+
+                    $('#modal-Cadastro').modal('show');
+                    $('#modal-Cadastro').find('.modal-title').text('@Html.Raw(RsBase.ALTERAR_USUARIO)');
+                    
+
+                    $('#iCriarCadastro').hide();
+                    $('#btnAlterarCadastro').show();
+
+                    const link = '@String.Concat(CONSTANTES.URLPortal, "/api/Usuarioapi/GetById?id=")';
+
+                    $.ajax({
+                        url: link+_id,
+                        type: 'GET',
+                        dataType: 'json',
+                        error: function (e) {
+                            console.log(e);
+                        },
+                        dataSrc: function (d) {
+                            return d.data;
+                        }
+                    })
+                    .done(async function (data) {
+
+                        if (data.ok) {
+
+                            $('#iNomeModal').val(data.objeto.nome);
+                            $('#iEmailModal').val(data.objeto.email);
+                            $('#iUsuarioModal').val(data.objeto.usuario);
+                            $('#iSenhaModal').val(data.objeto.senha);
+                            $('#iTipoUsuarioModal').val(data.objeto.tipo_Usuario).change();
+                            
+                            HidePageLoading();
+
+                        }
+                        else if (data.mensagem || data.exception) {
+                            if (data.mensagem) {
+                                HidePageLoading();
+                                Notificar('@RsBase.ATENCAO_', data.mensagem, 'warning')
+                            }
+                            else {
+                                HidePageLoading();
+                                Notificar('@RsBase.ATENCAO_', data.exception, 'warning')
+                            }
+                        }
+                    });
+
+                    //TODO Rotina e API de Alteração
+
+                    // Controller por fazer  
+                    // window.location.href = url.replace('__id__', _id);
+                }
+            });
     });
+
         
+
         $("#iCriarCadastro").on("click", function () {
             /*if (!$("#iNomeModal").val()) {
                 Notificar("", "Obrigatório preencher", "warning");
@@ -205,10 +267,65 @@
                 if (data.ok) {
                     
                    HidePageLoading();
-                    $('#iDataTable').DataTable().draw();
+                    //$('#iDataTable').DataTable().draw();
+                   $('#iDataTable').DataTable().ajax.url('api/getUsuario').load();
                     Notificar('@RsBase.INFORMACAO', 'Cadastro realizado com sucesso!', 'info')
 
                     
+                }
+                else if (data.mensagem || data.exception) {
+                    if (data.mensagem) {
+                        HidePageLoading();
+                        Notificar('@RsBase.ATENCAO_', data.mensagem, 'warning')
+                    }
+                    else {
+                        HidePageLoading();
+                        Notificar('@RsBase.ATENCAO_', data.exception, 'warning')
+                    }
+                }
+            });
+        });
+
+        $("#btnAlterarCadastro").on("click", function () {
+            if (ValidaCamposObrigatorios(false)) {
+                Notificar("@RsBase.ATENCAO_", "@String.Format(RsBase.PREENCHIMENTO_OBRIGATORIO)", "warning")
+                return false;
+            }
+
+            $('#modal-Cadastro').modal('hide');
+            ShowPageLoading();
+
+            const link = '@String.Concat(CONSTANTES.URLPortal, "/api/Usuarioapi/Alterar")';
+
+            $.ajax({
+                url: link,
+                type: 'POST',
+                data: {
+                    Id: _id,
+                    Nome : $('#iNomeModal').val(),
+                    Email : $('#iEmailModal').val(),
+                    Usuario : $('#iUsuarioModal').val(),
+                    Senha : $('#iSenhaModal').val(),
+                    Tipo_Usuario : $("#iTipoUsuarioModal option:selected").val()                   
+
+                },
+                error: function (e) {
+                    console.log(e);
+                },
+                dataSrc: function (d) {
+                    return d.data;
+                }
+            })
+            .done(function (data) {
+
+                if (data.ok) {
+
+                   HidePageLoading();
+                    $('#iDataTable').DataTable().ajax.url('api/getUsuario').load();
+                    //oDatatable.draw();
+                    Notificar('@RsBase.INFORMACAO', 'Alteração realizada com sucesso!', 'info')
+
+
                 }
                 else if (data.mensagem || data.exception) {
                     if (data.mensagem) {
@@ -261,7 +378,8 @@
 
                                             if (data.ok) {
                                                 HidePageLoading();
-                                                $('#iDataTable').DataTable().draw();
+                                                //$('#iDataTable').DataTable().draw();
+                                                $('#iDataTable').DataTable().ajax.url('api/getUsuario').load();
                                                 Notificar('@RsBase.INFORMACAO', 'Exclusão realizada com sucesso!', 'info')
 
 
@@ -383,6 +501,7 @@
                     <div class="text-center">
                         <button type="button" class="btn btn-danger" id="iCancelar" data-dismiss="modal">Cancelar</button>
                         <button type="button" class="btn btn-success" id="iCriarCadastro">@RsBase.GRAVAR</button>
+                        <button type="button" class="btn btn-success" id="btnAlterarCadastro">@RsBase.ALTERAR</button>
                     </div>
                 </div>
             </div>

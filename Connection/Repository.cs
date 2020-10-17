@@ -237,6 +237,28 @@ namespace PrjUcbWeb.Connection
             }
         }
 
+        public async Task SaveOrUpdate(T entidade)
+        {
+            using (ISession session = MySQLSessionFactory.StartSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        await session.SaveOrUpdateAsync(entidade);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (!transaction.WasCommitted)
+                        {
+                            transaction.Rollback();
+                        }
+                        throw new Exception("Erro ao atualizar  entidade: " + ex.Message);
+                    }
+                }
+            }
+        }
+
         private Boolean disposedValue;// To detect redundant calls
 
         // IDisposable

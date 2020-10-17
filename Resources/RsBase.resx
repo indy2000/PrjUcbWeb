@@ -120,17 +120,38 @@
   <data name="ADMINISTRADOR" xml:space="preserve">
     <value>Administrador</value>
   </data>
+  <data name="ALTERAR" xml:space="preserve">
+    <value>Alterar</value>
+  </data>
+  <data name="ALTERAR USUARIO" xml:space="preserve">
+    <value>Alterar Usuário</value>
+  </data>
+  <data name="ALTERAR_TURMA" xml:space="preserve">
+    <value>Alterar Turma</value>
+  </data>
   <data name="ATENCAO_" xml:space="preserve">
     <value>Atenção!</value>
   </data>
   <data name="CADASTRAR" xml:space="preserve">
     <value>Cadastrar</value>
   </data>
+  <data name="CADASTRAR_TURMA" xml:space="preserve">
+    <value>Cadastrar Turma</value>
+  </data>
   <data name="CADASTRAR_USUARIO" xml:space="preserve">
     <value>Cadastrar Usuário</value>
   </data>
+  <data name="CODTURMA_OU_PROF" xml:space="preserve">
+    <value>Cod. Turma ou Professor</value>
+  </data>
+  <data name="COD_TURMA" xml:space="preserve">
+    <value>Código de Turma</value>
+  </data>
   <data name="CRIAR" xml:space="preserve">
     <value>Criar</value>
+  </data>
+  <data name="DISCIPLINA" xml:space="preserve">
+    <value>Disciplina</value>
   </data>
   <data name="EMAIL" xml:space="preserve">
     <value>E-mail</value>
@@ -144,14 +165,29 @@
   <data name="GRAVAR" xml:space="preserve">
     <value>Gravar</value>
   </data>
+  <data name="HORARIO" xml:space="preserve">
+    <value>Horário</value>
+  </data>
+  <data name="HORA_FIM" xml:space="preserve">
+    <value>Hora Fim</value>
+  </data>
+  <data name="HORA_INICIO" xml:space="preserve">
+    <value>Hora Inicio</value>
+  </data>
   <data name="ID_OU_USUARIO" xml:space="preserve">
     <value>Usuário ou Id</value>
+  </data>
+  <data name="INFODATATABLE" xml:space="preserve">
+    <value>Exibindo {0} até {1} de um total de {2} registro(s).</value>
   </data>
   <data name="INFORMACAO" xml:space="preserve">
     <value>Informação!</value>
   </data>
   <data name="INICIO" xml:space="preserve">
     <value>Inicio</value>
+  </data>
+  <data name="LISTAGEM_TURMA" xml:space="preserve">
+    <value>Listagem de Turmas</value>
   </data>
   <data name="LISTAGEM_USUARIO" xml:space="preserve">
     <value>Listagem de Usuários</value>
@@ -173,6 +209,15 @@
   </data>
   <data name="PROFESSOR" xml:space="preserve">
     <value>Professor</value>
+  </data>
+  <data name="QUANTIDADE_ALUNOS" xml:space="preserve">
+    <value>Quantidade de Alunos</value>
+  </data>
+  <data name="QUANT_ALUNOS" xml:space="preserve">
+    <value>Quant. Alunos</value>
+  </data>
+  <data name="SELECIONE" xml:space="preserve">
+    <value>Selecione</value>
   </data>
   <data name="SENHA" xml:space="preserve">
     <value>Senha</value>
