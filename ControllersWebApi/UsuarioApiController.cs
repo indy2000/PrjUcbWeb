@@ -255,7 +255,7 @@ namespace PrjUcbWeb.ControllersWebApi
                     Nome = usuario.nome,
                     Usuario = usuario.usuario,
                     Email = usuario.email,
-                    Senha = usuario.senha,
+                    Senha = Criptografia.doDecryptAES(usuario.senha),
                     Tipo_Usuario = usuario.tipo_usuario == "administrador" ? 1 : 2
                 };
 

@@ -16,7 +16,7 @@ namespace PrjUcbWeb
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional },
+                defaults: new { controller = "Usuario", action = "Index", id = UrlParameter.Optional },
                 // caso use Areas defina o namespace
                 namespaces: new[] { "PrjUcbWeb.ControllersWebApi.Controllers" }
             );

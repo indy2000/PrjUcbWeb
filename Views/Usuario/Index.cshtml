@@ -270,6 +270,7 @@
                     //$('#iDataTable').DataTable().draw();
                    $('#iDataTable').DataTable().ajax.url('api/getUsuario').load();
                     Notificar('@RsBase.INFORMACAO', 'Cadastro realizado com sucesso!', 'info')
+                    LimparModal();
 
                     
                 }
@@ -277,10 +278,12 @@
                     if (data.mensagem) {
                         HidePageLoading();
                         Notificar('@RsBase.ATENCAO_', data.mensagem, 'warning')
+                        LimparModal();
                     }
                     else {
                         HidePageLoading();
                         Notificar('@RsBase.ATENCAO_', data.exception, 'warning')
+                        LimparModal();
                     }
                 }
             });
@@ -324,6 +327,7 @@
                     $('#iDataTable').DataTable().ajax.url('api/getUsuario').load();
                     //oDatatable.draw();
                     Notificar('@RsBase.INFORMACAO', 'Alteração realizada com sucesso!', 'info')
+                    LimparModal();
 
 
                 }
@@ -331,10 +335,12 @@
                     if (data.mensagem) {
                         HidePageLoading();
                         Notificar('@RsBase.ATENCAO_', data.mensagem, 'warning')
+                        LimparModal();
                     }
                     else {
                         HidePageLoading();
                         Notificar('@RsBase.ATENCAO_', data.exception, 'warning')
+                        LimparModal();
                     }
                 }
             });
@@ -381,16 +387,19 @@
                                                 //$('#iDataTable').DataTable().draw();
                                                 $('#iDataTable').DataTable().ajax.url('api/getUsuario').load();
                                                 Notificar('@RsBase.INFORMACAO', 'Exclusão realizada com sucesso!', 'info')
+                                                rows_selected = [];
 
 
                                             }
                                             else if (data.mensagem || data.exception) {
                                                 if (data.mensagem) {
                                                     HidePageLoading();
+                                                    rows_selected = [];
                                                     Notificar('@RsBase.ATENCAO_', data.mensagem, 'info')
                                                 }
                                                 else {
                                                     HidePageLoading();
+                                                    rows_selected = [];
                                                     Notificar('@RsBase.ATENCAO_', data.exception, 'info')
                                                 }
                                             }
@@ -402,6 +411,17 @@
                             });
             }
             
+        }
+
+        function LimparModal() {
+            _id = null;
+            $('#iNomeModal').val("");
+            $('#iEmailModal').val("");
+            $('#iUsuarioModal').val("");
+            $('#iSenhaModal').val("");
+            $("#iTipoUsuarioModal").val("");
+            $('#iCriarCadastro').show();
+            $('#btnAlterarCadastro').hide();
         }
 
 
@@ -489,7 +509,7 @@
                     <div class="form-group col-sm-6">
                         <label>@RsBase.TIPO_USUARIO:</label>
                         <select class="form-control" id="iTipoUsuarioModal">
-                            <option selected value="0">Selecione</option>
+                            <option selected value="">Selecione</option>
                             <option value="1">Administrador</option>
                             <option value="2">Professor</option>
                         </select>
@@ -499,7 +519,7 @@
 
                 <div class="form-group col-sm-12" style="padding: 15px;">
                     <div class="text-center">
-                        <button type="button" class="btn btn-danger" id="iCancelar" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="iCancelar" data-dismiss="modal" onclick="LimparModal()">Cancelar</button>
                         <button type="button" class="btn btn-success" id="iCriarCadastro">@RsBase.GRAVAR</button>
                         <button type="button" class="btn btn-success" id="btnAlterarCadastro">@RsBase.ALTERAR</button>
                     </div>
